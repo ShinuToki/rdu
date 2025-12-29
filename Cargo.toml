@@ -1,0 +1,16 @@
+[package]
+name = "rdu"
+version = "1.0.0"
+authors = ["Joan Lara Ganau"]
+repository = "https://github.com/ShinuToki/rdu"
+readme = "README.md"
+description = "Rust-based disk usage analyzer"
+license = "MIT"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.53", features = ["derive"] }
+crossterm = "0.29.0"
+jwalk = "0.8.1"
+number_prefix = "0.4.0"
+ratatui = "0.30.0"
