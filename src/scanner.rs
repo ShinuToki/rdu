@@ -1,4 +1,4 @@
-use crate::{args::Args, file_node::FileNode, utils::{get_volume_id, num_cpus}};
+use crate::{args::Args, file_node::FileNode, utils::num_cpus};
 use std::{
     cell::RefCell,
     collections::HashMap,
@@ -10,6 +10,9 @@ use std::{
 
 #[cfg(windows)]
 use crate::utils::get_drive_letter;
+
+#[cfg(not(windows))]
+use crate::utils::get_volume_id;
 
 /// Parallel directory scanner using jwalk
 pub fn scan_dir(path: &Path, args: &Args) -> Rc<RefCell<FileNode>> {

@@ -1,5 +1,8 @@
 use number_prefix::NumberPrefix;
-use std::{fs, path::Path};
+use std::path::Path;
+
+#[cfg(not(windows))]
+use std::fs;
 
 pub fn format_size(size: u64) -> String {
     match NumberPrefix::binary(size as f64) {
