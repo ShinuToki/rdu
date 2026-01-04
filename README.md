@@ -125,6 +125,23 @@ rdu -L /path/to/directory
 - [number_prefix](https://crates.io/crates/number_prefix) - Human-readable size formatting
 - [ratatui](https://crates.io/crates/ratatui) - Terminal user interface framework
 
+## Development
+
+### Pre-push Validation
+
+Before pushing changes, run the validation script to ensure CI will pass:
+
+```powershell
+# Basic checks (formatting, linting, tests)
+.\scripts\pre-push-check.ps1
+
+# Include tag version verification (for releases)
+.\scripts\pre-push-check.ps1 -CheckTagVersion
+
+# Skip Prettier check
+.\scripts\pre-push-check.ps1 -SkipPrettier
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

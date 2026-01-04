@@ -108,18 +108,6 @@ jobs:
             cp target/${{ matrix.target }}/release/rdu release/${{ matrix.name }}
           fi
 
-      - name: Generate Checksums
-        shell: bash
-        run: |
-          cd release
-          for file in *; do
-            if command -v sha256sum &> /dev/null; then
-              sha256sum "$file" > "$file.sha256"
-            else
-              shasum -a 256 "$file" > "$file.sha256"
-            fi
-          done
-
       - name: Upload Release
         uses: softprops/action-gh-release@v2
         with:
