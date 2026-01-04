@@ -140,16 +140,14 @@ pub fn scan_dir(path: &Path, args: &Args) -> Rc<RefCell<FileNode>> {
     
     // Propagate directory sizes from deepest to shallowest
     for (entry_path, _, is_dir, _) in sorted_entries.iter().rev() {
-        if *is_dir {
-            if let Some(node) = nodes.get(entry_path) {
+        if *is_dir
+            && let Some(node) = nodes.get(entry_path) {
                 let dir_size = node.borrow().size;
-                if let Some(parent_path) = entry_path.parent() {
-                    if let Some(parent_node) = nodes.get(parent_path) {
+                if let Some(parent_path) = entry_path.parent()
+                    && let Some(parent_node) = nodes.get(parent_path) {
                         parent_node.borrow_mut().size += dir_size;
                     }
-                }
             }
-        }
     }
     
     root_node

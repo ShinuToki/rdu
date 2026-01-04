@@ -21,7 +21,10 @@ pub fn render_bar(percent: f64, width: usize) -> String {
     
     let mut bar = "█".repeat(full_blocks.min(width));
     if full_blocks < width && partial > 0 {
-        bar.push(PARTIAL_CHARS[(partial - 1).min(6)]);
+        let idx = (partial - 1).min(6);
+        if let Some(&char_code) = PARTIAL_CHARS.get(idx) {
+            bar.push(char_code);
+        }
     }
     bar
 }

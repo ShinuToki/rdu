@@ -192,20 +192,21 @@ impl App {
     pub fn enter_dir(&mut self) {
         let children = self.current_children();
         if let Some(selected_idx) = self.state.selected()
-            && selected_idx < children.len() {
-                let selected = Rc::clone(&children[selected_idx]);
-                if selected.borrow().is_dir {
-                    self.path_history.push(Rc::clone(&self.current_node));
-                    self.current_node = selected;
-                    self.sort_current_view();
-                    let new_children = self.current_children();
-                    if new_children.is_empty() {
-                        self.state.select(None);
-                    } else {
-                        self.state.select(Some(0));
+            && selected_idx < children.len()
+                && let Some(child) = children.get(selected_idx) {
+                    let selected = Rc::clone(child);
+                    if selected.borrow().is_dir {
+                        self.path_history.push(Rc::clone(&self.current_node));
+                        self.current_node = selected;
+                        self.sort_current_view();
+                        let new_children = self.current_children();
+                        if new_children.is_empty() {
+                            self.state.select(None);
+                        } else {
+                            self.state.select(Some(0));
+                        }
                     }
                 }
-            }
     }
 
     /// Go up one level

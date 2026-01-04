@@ -22,10 +22,14 @@ pub fn ui(f: &mut Frame, app: &mut App) {
         ])
         .split(f.area());
 
-    render_title_bar(f, chunks[0]);
-    render_directory_info(f, app, chunks[1]);
-    render_file_list(f, app, chunks[2]);
-    render_footer(f, app, chunks[3]);
+    let [title_area, dir_info_area, list_area, footer_area] = *chunks else {
+        return;
+    };
+
+    render_title_bar(f, title_area);
+    render_directory_info(f, app, dir_info_area);
+    render_file_list(f, app, list_area);
+    render_footer(f, app, footer_area);
 
     if app.show_help {
         render_help_overlay(f);

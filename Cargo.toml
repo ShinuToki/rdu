@@ -8,6 +8,12 @@ description = "Rust-based disk usage analyzer"
 license = "MIT"
 edition = "2024"
 
+[lints.clippy]
+panic = "deny"
+unwrap_used = "deny"
+expect_used = "deny"
+indexing_slicing = "deny"
+
 [dependencies]
 clap = { version = "4.5.53", features = ["derive"] }
 crossterm = "0.29.0"
