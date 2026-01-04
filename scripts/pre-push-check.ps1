@@ -2,9 +2,40 @@
 # Pre-push validation script - replicates CI/CD checks locally
 
 param(
+    [Alias("h")]
+    [switch]$help,
     [switch]$SkipPrettier,
     [switch]$CheckTagVersion
 )
+
+if ($help) {
+    Write-Host @"
+Pre-push Validation Script
+===========================
+Replicates CI/CD checks locally to ensure your push won't fail.
+
+USAGE:
+    .\scripts\pre-push-check.ps1 [OPTIONS]
+
+OPTIONS:
+    -help, -h           Show this help message
+    -SkipPrettier       Skip Prettier formatting check
+    -CheckTagVersion    Verify that the latest git tag matches Cargo.toml version
+
+EXAMPLES:
+    .\scripts\pre-push-check.ps1                   # Run all checks
+    .\scripts\pre-push-check.ps1 -SkipPrettier     # Skip Prettier
+    .\scripts\pre-push-check.ps1 -CheckTagVersion  # Include tag verification
+
+CHECKS PERFORMED:
+    1. Prettier formatting (md, yml files)
+    2. Rust formatting (cargo fmt)
+    3. Clippy linting (cargo clippy)
+    4. Unit tests (cargo test)
+    5. Tag version match (optional)
+"@
+    exit 0
+}
 
 $ErrorActionPreference = "Stop"
 $script:HasErrors = $false
@@ -32,14 +63,17 @@ if (-not $SkipPrettier) {
         $result = npx prettier "**/*.{md,yml}" --check 2>&1
         if ($LASTEXITCODE -eq 0) {
             Write-Success "Prettier formatting OK"
-        } else {
+        }
+        else {
             Write-Failure "Prettier found formatting issues:"
             Write-Host $result
         }
-    } catch {
+    }
+    catch {
         Write-Failure "Prettier check failed: $_"
     }
-} else {
+}
+else {
     Write-Host "`nSkipping Prettier check" -ForegroundColor Yellow
 }
 
@@ -48,7 +82,8 @@ Write-Step "Check Formatting (Rust)"
 cargo fmt -- --check
 if ($LASTEXITCODE -eq 0) {
     Write-Success "Rust formatting OK"
-} else {
+}
+else {
     Write-Failure "Rust formatting issues found. Run 'cargo fmt' to fix."
 }
 
@@ -57,7 +92,8 @@ Write-Step "Check Linting (Clippy)"
 cargo clippy -- -D warnings
 if ($LASTEXITCODE -eq 0) {
     Write-Success "Clippy linting OK"
-} else {
+}
+else {
     Write-Failure "Clippy found issues"
 }
 
@@ -66,7 +102,8 @@ Write-Step "Run Tests"
 cargo test --verbose
 if ($LASTEXITCODE -eq 0) {
     Write-Success "All tests passed"
-} else {
+}
+else {
     Write-Failure "Some tests failed"
 }
 
@@ -80,10 +117,12 @@ if ($CheckTagVersion) {
         
         if ($tagVersion -eq $cargoVersion) {
             Write-Success "Tag version ($tagVersion) matches Cargo.toml ($cargoVersion)"
-        } else {
+        }
+        else {
             Write-Failure "Version mismatch! Tag: $tagVersion, Cargo.toml: $cargoVersion"
         }
-    } catch {
+    }
+    catch {
         Write-Host "No tags found or error reading version" -ForegroundColor Yellow
     }
 }
@@ -93,7 +132,8 @@ Write-Host "`n" + ("=" * 50) -ForegroundColor Cyan
 if ($script:HasErrors) {
     Write-Host "FAILED - Fix the issues above before pushing" -ForegroundColor Red
     exit 1
-} else {
+}
+else {
     Write-Host "ALL CHECKS PASSED - Ready to push!" -ForegroundColor Green
     exit 0
 }
