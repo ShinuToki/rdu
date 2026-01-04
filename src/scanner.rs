@@ -59,14 +59,12 @@ pub fn scan_dir(path: &Path, args: &Args) -> Rc<RefCell<FileNode>> {
                 }
 
                 #[cfg(not(windows))]
-                if args.one_file_system {
-                    if let (Some(root_vol), Some(entry_vol)) =
+                if args.one_file_system
+                    && let (Some(root_vol), Some(entry_vol)) =
                         (get_volume_id(&root_path), get_volume_id(&entry_path))
-                    {
-                        if root_vol != entry_vol {
-                            continue;
-                        }
-                    }
+                    && root_vol != entry_vol
+                {
+                    continue;
                 }
 
                 let meta = if args.follow_links {
