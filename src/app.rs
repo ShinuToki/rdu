@@ -1,15 +1,6 @@
-use crate::{
-    args::Args,
-    file_node::FileNode,
-    scanner::scan_dir,
-    sort::SortMode,
-};
+use crate::{args::Args, file_node::FileNode, scanner::scan_dir, sort::SortMode};
 use ratatui::widgets::ListState;
-use std::{
-    cell::RefCell,
-    path::PathBuf,
-    rc::Rc,
-};
+use std::{cell::RefCell, path::PathBuf, rc::Rc};
 
 /// Application State
 pub struct App {
@@ -71,7 +62,11 @@ impl App {
             self.sort_ascending = false;
         }
         self.sort_current_view();
-        self.status_message = Some(format!("Sort: {} {}", self.sort_mode.name(), if self.sort_ascending { "asc" } else { "desc" }));
+        self.status_message = Some(format!(
+            "Sort: {} {}",
+            self.sort_mode.name(),
+            if self.sort_ascending { "asc" } else { "desc" }
+        ));
     }
 
     pub fn toggle_sort_by_mtime(&mut self) {
@@ -82,7 +77,11 @@ impl App {
             self.sort_ascending = false;
         }
         self.sort_current_view();
-        self.status_message = Some(format!("Sort: {} {}", self.sort_mode.name(), if self.sort_ascending { "asc" } else { "desc" }));
+        self.status_message = Some(format!(
+            "Sort: {} {}",
+            self.sort_mode.name(),
+            if self.sort_ascending { "asc" } else { "desc" }
+        ));
     }
 
     pub fn toggle_sort_by_count(&mut self) {
@@ -93,7 +92,11 @@ impl App {
             self.sort_ascending = false;
         }
         self.sort_current_view();
-        self.status_message = Some(format!("Sort: {} {}", self.sort_mode.name(), if self.sort_ascending { "asc" } else { "desc" }));
+        self.status_message = Some(format!(
+            "Sort: {} {}",
+            self.sort_mode.name(),
+            if self.sort_ascending { "asc" } else { "desc" }
+        ));
     }
 
     pub fn current_children(&self) -> Vec<Rc<RefCell<FileNode>>> {
@@ -105,7 +108,10 @@ impl App {
     }
 
     pub fn current_total_size(&self) -> u64 {
-        self.current_node.borrow().children.iter()
+        self.current_node
+            .borrow()
+            .children
+            .iter()
             .map(|c| c.borrow().size)
             .sum()
     }
@@ -193,20 +199,21 @@ impl App {
         let children = self.current_children();
         if let Some(selected_idx) = self.state.selected()
             && selected_idx < children.len()
-                && let Some(child) = children.get(selected_idx) {
-                    let selected = Rc::clone(child);
-                    if selected.borrow().is_dir {
-                        self.path_history.push(Rc::clone(&self.current_node));
-                        self.current_node = selected;
-                        self.sort_current_view();
-                        let new_children = self.current_children();
-                        if new_children.is_empty() {
-                            self.state.select(None);
-                        } else {
-                            self.state.select(Some(0));
-                        }
-                    }
+            && let Some(child) = children.get(selected_idx)
+        {
+            let selected = Rc::clone(child);
+            if selected.borrow().is_dir {
+                self.path_history.push(Rc::clone(&self.current_node));
+                self.current_node = selected;
+                self.sort_current_view();
+                let new_children = self.current_children();
+                if new_children.is_empty() {
+                    self.state.select(None);
+                } else {
+                    self.state.select(Some(0));
                 }
+            }
+        }
     }
 
     /// Go up one level
@@ -228,14 +235,14 @@ impl App {
         self.status_message = Some("Rescanning...".to_string());
         let path = self.current_path();
         let new_node = scan_dir(&path, &self.args);
-        
+
         // Update current node's children
         let mut current = self.current_node.borrow_mut();
         current.children = new_node.borrow().children.clone();
         current.size = new_node.borrow().size;
         current.error_count = new_node.borrow().error_count;
         drop(current);
-        
+
         self.sort_current_view();
         let children = self.current_children();
         if children.is_empty() {

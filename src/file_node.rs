@@ -1,9 +1,4 @@
-use std::{
-    cell::RefCell,
-    path::PathBuf,
-    rc::Rc,
-    time::SystemTime,
-};
+use std::{cell::RefCell, path::PathBuf, rc::Rc, time::SystemTime};
 
 /// Represents a file or directory
 #[derive(Debug, Clone)]
@@ -18,7 +13,13 @@ pub struct FileNode {
 }
 
 impl FileNode {
-    pub fn new(path: PathBuf, name: String, size: u64, is_dir: bool, mtime: Option<SystemTime>) -> Self {
+    pub fn new(
+        path: PathBuf,
+        name: String,
+        size: u64,
+        is_dir: bool,
+        mtime: Option<SystemTime>,
+    ) -> Self {
         Self {
             name,
             path,
@@ -29,7 +30,7 @@ impl FileNode {
             modified_time: mtime,
         }
     }
-    
+
     pub fn child_count(&self) -> usize {
         self.children.len()
     }

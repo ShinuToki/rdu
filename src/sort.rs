@@ -14,7 +14,7 @@ impl SortMode {
             SortMode::ItemCount => SortMode::Size,
         }
     }
-    
+
     pub fn name(&self) -> &'static str {
         match self {
             SortMode::Size => "size",

@@ -8,6 +8,12 @@ description = "Rust-based disk usage analyzer"
 license = "MIT"
 edition = "2024"
 
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
+
 [lints.clippy]
 panic = "deny"
 unwrap_used = "deny"
@@ -20,3 +26,4 @@ crossterm = "0.29.0"
 jwalk = "0.8.1"
 number_prefix = "0.4.0"
 ratatui = "0.30.0"
+

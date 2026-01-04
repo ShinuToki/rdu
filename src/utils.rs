@@ -14,11 +14,11 @@ pub fn format_size(size: u64) -> String {
 /// Render a progress bar using Unicode block characters (1/8 to 8/8 precision)
 pub fn render_bar(percent: f64, width: usize) -> String {
     const PARTIAL_CHARS: [char; 7] = ['▏', '▎', '▍', '▌', '▋', '▊', '▉'];
-    
+
     let fraction = percent / 100.0 * width as f64;
     let full_blocks = fraction.floor() as usize;
     let partial = ((fraction - full_blocks as f64) * 8.0).round() as usize;
-    
+
     let mut bar = "█".repeat(full_blocks.min(width));
     if full_blocks < width && partial > 0 {
         let idx = (partial - 1).min(6);

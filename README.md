@@ -1,6 +1,6 @@
 # rdu - Rust Disk Usage Analyzer
 
-![Release](https://img.shields.io/github/v/release/ShinuToki/aes-file-encryptor-rs?color=brightgreen)
+![Release](https://img.shields.io/github/v/release/ShinuToki/rdu?color=brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Rust](https://img.shields.io/badge/rust-stable-orange.svg)
 
@@ -53,49 +53,49 @@ rdu -L /path/to/directory
 
 ### Command Line Options
 
-| Option | Description |
-| :--- | :--- |
-| `[PATH]` | Directory to scan (default: current directory) |
-| `-x`, `--one-file-system` | Do not cross filesystem boundaries (drives on Windows) |
-| `-L`, `--follow-links` | Follow symbolic links and Junction points (caution: can cause loops) |
-| `-h`, `--help` | Print help information |
-| `-V`, `--version` | Print version information |
+| Option                    | Description                                                          |
+| :------------------------ | :------------------------------------------------------------------- |
+| `[PATH]`                  | Directory to scan (default: current directory)                       |
+| `-x`, `--one-file-system` | Do not cross filesystem boundaries (drives on Windows)               |
+| `-L`, `--follow-links`    | Follow symbolic links and Junction points (caution: can cause loops) |
+| `-h`, `--help`            | Print help information                                               |
+| `-V`, `--version`         | Print version information                                            |
 
 ## Keyboard Shortcuts
 
 ### Navigation
 
-| Key | Action |
-| :--- | :--- |
-| `j` / `↓` | Move down one item |
-| `k` / `↑` | Move up one item |
+| Key               | Action             |
+| :---------------- | :----------------- |
+| `j` / `↓`         | Move down one item |
+| `k` / `↑`         | Move up one item   |
 | `Ctrl+d` / `PgDn` | Move down 10 items |
-| `Ctrl+u` / `PgUp` | Move up 10 items |
-| `H` / `Home` | Go to first item |
-| `G` / `End` | Go to last item |
+| `Ctrl+u` / `PgUp` | Move up 10 items   |
+| `H` / `Home`      | Go to first item   |
+| `G` / `End`       | Go to last item    |
 
 ### Actions
 
-| Key | Action |
-| :--- | :--- |
-| `o` / `l` / `Enter` / `→` | Enter selected directory |
-| `u` / `h` / `Backspace` / `←` | Go up one level |
-| `r` | Refresh current view |
+| Key                           | Action                   |
+| :---------------------------- | :----------------------- |
+| `o` / `l` / `Enter` / `→`     | Enter selected directory |
+| `u` / `h` / `Backspace` / `←` | Go up one level          |
+| `r`                           | Refresh current view     |
 
 ### Sorting
 
-| Key | Action |
-| :--- | :--- |
+| Key | Action                                     |
+| :-- | :----------------------------------------- |
 | `s` | Toggle sort by size (ascending/descending) |
-| `m` | Toggle sort by modification time |
-| `c` | Toggle sort by item count |
+| `m` | Toggle sort by modification time           |
+| `c` | Toggle sort by item count                  |
 
 ### Other
 
-| Key | Action |
-| :--- | :--- |
-| `?` | Toggle help overlay |
-| `q` / `Esc` | Quit |
+| Key         | Action              |
+| :---------- | :------------------ |
+| `?`         | Toggle help overlay |
+| `q` / `Esc` | Quit                |
 
 ## How It Works
 
