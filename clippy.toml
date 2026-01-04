@@ -3,3 +3,5 @@ allow-panic-in-tests = true
 allow-expect-in-tests = true
 suppress-restriction-lint-in-const = true
 allow-indexing-slicing-in-tests = true
+allow-unwrap-in-consts = true
+allow-expect-in-consts = true
